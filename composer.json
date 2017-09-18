@@ -1,0 +1,30 @@
+{
+  "name": "JorryGo/FullVk",
+  "description": "VK-api by object oriented way and with the most complete functionality",
+  "keywords": [
+    "vk", "api", "php", "client", "oop", "full"
+  ],
+  "homepage": "https://github.com/jorrygo/fullvk",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "JorryGo",
+      "email": "jorygo@mail.ru",
+      "homepage": "https://github.com/JorryGo",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php" : ">=7.0.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "JorryGo\\FullVk\\": "src"
+    }
+  },
+  "extra": {
+    "branch-alias": {
+      "dev-master": "0.0-dev"
+    }
+  }
+}
