@@ -26,7 +26,18 @@ class User {
         return $this->execute('account.getCounters');
     }
 
-    public function banUser($user_id) {
+    public function banUser(int $user_id) {
         return $this->execute('account.banUser', ['user_id' => $user_id]);
+    }
+
+    public function unbanUser(int $user_id) {
+        return $this->execute('account.unbanbanUser', ['user_id' => $user_id]);
+    }
+
+    public function getBanned(int $offset = 0, int $count = 20) {
+        return $this->execute('account.getBanned', [
+            'offset' => $offset,
+            'count' => $count,
+        ]);
     }
 }

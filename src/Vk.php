@@ -32,7 +32,7 @@ class Vk {
         $this->app_secret = $app_secret;
     }
 
-    public function getAuthLink(string $redirect_uri, string $scope = '', string $display = 'page', string $state = '') : string
+    public function getAuthLink(string $redirect_uri, string $scope = '', string $state = '', string $display = 'page') : string
     {
         $params = [
             'client_id' => $this->app_id,
