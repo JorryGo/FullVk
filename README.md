@@ -1,2 +1,15 @@
-# FullVk
-VK-api by object oriented way and with the most complete functionality
+## [Russian](#rus)
+## [English](#en)
+
+## Russian <a id="rus"></a>
+
+Целью данной библиотеки стоит как можно больший охват возможностей vk api
+
+Библиотека поддерживает большую часть доступных методов.
+
+
+
+
+## In English <a id="en"></a>
+
+sd

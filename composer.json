@@ -19,7 +19,8 @@
   },
   "autoload": {
     "psr-4": {
-      "JorryGo\\FullVk\\": "src"
+      "JorryGo\\FullVk\\": "src",
+      "JorryGo\\FullVk\\traits\\": "src/traits"
     }
   },
   "extra": {
