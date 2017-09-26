@@ -17,24 +17,33 @@ class User {
         $this->user_id = $user_id;
     }
 
+    public function wall($id = 0) : Wall
+    {
+        return new Wall($this->token, $id);
+    }
+
     public function getProfileInfo()
     {
         return $this->execute('account.getProfileInfo');
     }
 
-    public function getCounters() {
+    public function getCounters()
+    {
         return $this->execute('account.getCounters');
     }
 
-    public function banUser(int $user_id) {
+    public function banUser(int $user_id)
+    {
         return $this->execute('account.banUser', ['user_id' => $user_id]);
     }
 
-    public function unbanUser(int $user_id) {
+    public function unbanUser(int $user_id)
+    {
         return $this->execute('account.unbanbanUser', ['user_id' => $user_id]);
     }
 
-    public function getBanned(int $offset = 0, int $count = 20) {
+    public function getBanned(int $offset = 0, int $count = 20)
+    {
         return $this->execute('account.getBanned', [
             'offset' => $offset,
             'count' => $count,

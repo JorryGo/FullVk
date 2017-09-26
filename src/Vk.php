@@ -18,7 +18,7 @@ use JorryGo\FullVk\traits\execute;
 class Vk {
     use execute;
 
-    const LOGS_DIRECTORY = __DIR__ . '/../logs/';
+    public static $LOGS_DIRECTORY = __DIR__ . '/../logs/';
 
     public $app_id = null;
     public $app_secret= null;
@@ -48,7 +48,8 @@ class Vk {
 
     }
 
-    public function getAuthToken(string $redirect_url, string $code, bool $return_user = false) {
+    public function getAuthToken(string $redirect_url, string $code, bool $return_user = false)
+    {
         $params = [
             'client_id' => $this->app_id,
             'client_secret' => $this->app_secret,
@@ -85,7 +86,14 @@ class Vk {
         return new User($response->access_token, $response->user_id);
     }
 
-    public function getUser(string $access_token, int $user_id) : User {
+    public function getUser(string $access_token, int $user_id) : User
+    {
         return new User($access_token, $user_id);
+    }
+
+    public static function setLogDirectory(string $dir) : bool
+    {
+        self::$LOGS_DIRECTORY = $dir;
+        return true;
     }
 }
