@@ -18,7 +18,6 @@ class VkException extends \Exception {
         $file = Vk::$LOGS_DIRECTORY . date('Y-m') . '_exception_log.txt';
 
         $msg_tpl = '[' . date('Y-m-d H:i:s') . '] ';
-        $msg_tpl .= '|' . $_SERVER['REMOTE_ADDR'] . '| ';
         $msg_tpl .= $message . PHP_EOL;
 
         file_put_contents($file, $msg_tpl, FILE_APPEND);
