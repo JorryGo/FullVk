@@ -81,7 +81,7 @@ class Vk {
         $auth_request_string = 'https://oauth.vk.com/token?' . $params;
         $response = $this->execute('', [],  $auth_request_string, false);
 
-        $this->token = $response->token;
+        $this->token = $response->access_token;
 
         return new User($response->access_token, $response->user_id);
     }
