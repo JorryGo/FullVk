@@ -7,6 +7,9 @@ trait execute {
 
     use variables;
 
+    public static $execute_per_second = 2;
+    public static $last_execute_time;
+
     public function execute(string $method, array $params = [], string $query_url = null, bool $fast_responce = true, bool $file = false)
     {
         if (!$file) {
@@ -28,6 +31,15 @@ trait execute {
 
         $result = json_decode(curl_exec($this->ch));
         curl_close($this->ch);
+
+        if (self::$last_execute_time) {
+            $check = microtime(true) - self::$last_execute_time;
+            if (1/self::$execute_per_second < $check) {
+                usleep(1 - $check * 1000000);
+            }
+        }
+
+        self::$last_execute_time = microtime(true);
 
         if (!empty($result->error)) {
             if (is_string($result->error)) {
