@@ -35,7 +35,7 @@ trait execute {
         if (self::$last_execute_time) {
             $check = microtime(true) - self::$last_execute_time;
             if (1/self::$execute_per_second < $check) {
-                usleep(1 - $check * 1000000);
+                usleep((1 - $check) * 1000000);
             }
         }
 
