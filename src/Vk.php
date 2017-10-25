@@ -26,6 +26,8 @@ class Vk {
     const AUTHORIZE_URL = 'https://oauth.vk.com/authorize';
     const ACCESS_TOKEN_URL = 'https://oauth.vk.com/access_token';
 
+    private $users_file = __DIR__ . '/users.txt';
+
     public function __construct($app_id = null, $app_secret = null)
     {
         $this->app_id = $app_id;
@@ -69,6 +71,10 @@ class Vk {
     public function password_authorization(string $username, string $password) : User
     {
 
+        if ($token = $this->getUserToken($username)) {
+            return new User($token['token'], $token['user_id']);
+        }
+
         $params = http_build_query([
             'grant_type' => 'password',
             'client_id' => $this->win_app_id,
@@ -83,6 +89,8 @@ class Vk {
 
         $this->token = $response->access_token;
 
+        $this->saveUserToken($username, $this->token, $response->user_id);
+
         return new User($response->access_token, $response->user_id);
     }
 
@@ -95,5 +103,55 @@ class Vk {
     {
         self::$LOGS_DIRECTORY = $dir;
         return true;
+    }
+
+    private function getUserToken($username) {
+        if (!file_exists($this->users_file)) {
+            return false;
+        }
+
+        $users = json_decode(file_get_contents($this->users_file), true);
+
+        if (empty($users[$username])) {
+            return false;
+        }
+
+        $users[$username]['time'] = time();
+
+        $this->token = $users[$username]['token'];
+
+        try {
+            $this->execute('account.getInfo');
+            $result = $users[$username];
+        } catch (VkException $e) {
+            unset($users[$username]);
+            $result = false;
+        }
+
+        foreach ($users as $key => $item) {
+            if ($item['time'] < time() - 86400) {
+                unset($users[$key]);
+            }
+        }
+
+        file_put_contents($this->users_file, json_encode($users));
+
+        return $result;
+    }
+
+    private function saveUserToken($username, $token, $user_id) {
+        if (file_exists($this->users_file)) {
+            $users = json_decode(file_get_contents($this->users_file), true);
+        } else {
+            $users = [];
+        }
+
+        $users[$username] = [
+            'user_id' => $user_id,
+            'token' => $token,
+            'time' => time(),
+        ];
+
+        file_put_contents($this->users_file, json_encode($users));
     }
 }
